@@ -107,3 +107,5 @@ function rightStairCasePattern(n){
 }
 
 rightStairCasePattern(3);
+
+
