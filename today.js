@@ -65,10 +65,9 @@ readSyncFile('file.txt');
 
  /***================================array problems===============================================***/
 
-
  function findLeasrNumberForASum(n){    
-    if(n <= 0)
-     return 0;
+    if(n <= 3)
+     return n;
  
     var sqrt = parseInt(Math.sqrt(n));
     
@@ -91,18 +90,21 @@ readSyncFile('file.txt');
 
  var memo = {};
 function findLeastNumberForASum(n){    
-   memo["1"] = 1;
-   memo["2"] = 2;
-   memo["3"] = 3;
-   var res = 0;
-
-   for(var i = 4; i <=n ; i++){
+    memo["0"] = 0;
+    memo["1"] = 1;
+   
+   for(var i = 2; i <=n ; i++){
     var min = i;
-    var sqrt = Math.sqrt(i);
-    for(var j = 1; j<= sqrt; j++){
-        res = Math.min(min, memo[n - j * j]+1)
+    var sqrt = parseInt(Math.sqrt(i));
+    debugger
+    for(var j = 1; j<= sqrt; j++){ //5
+        //1  (4, (5-1)+1) = 4
+        //2  (4, (5-4)+1) = 2
+        min = Math.min(min, memo[i - (j * j)]+1)
+        //1,2
     }
-    memo[i] = res;
+    //memo[4] = 2;
+    memo[i] = min;
    }
    return memo[n];
  }
@@ -120,7 +122,7 @@ function findLeastNumberForASum(n){
       }, {});
 
     for(var i=0; i < str.length; i++){
-       for(var j = 0; j< str.length -i; i++){
+       for(var j = 0; j< str.length -i; j++){
            var next = str.substr(j, i+1);
            console.log('next:', next);
            if(resultMap[next] == next){
@@ -190,7 +192,9 @@ var input =
 {checkin : 5, checkout: 9}, 
 {checkin : 5, checkout: 12},
 {checkin : 10, checkout: 12}]; 
- 
+ //1,2,3,4,5,5,10
+ //4,5,6,9,12,12
+
 var timings = input.reduce((acc,obj) => {
     acc.checkin.push(obj.checkin);
     acc.checkout.push(obj.checkout);
@@ -213,6 +217,7 @@ for(var i =1, j=0; i < timings.checkin.length ;){
         i++;
     }else{
         count--;
+        j++;
     }
 }
 console.log('max:', max);
@@ -251,11 +256,7 @@ function delatEncode(arr) {
  var arr = ["25626", "25757", "24367", "24267", "16", "100", "2", "7277"];
  console.log(delatEncode(arr));
 
-
-
-
-
- var output = {};
+var output = {};
 for(var i = 0 ; i < input.length; i++){
     var match = input[i].replace(' ', '').split('').sort().join('');
    debugger
@@ -265,12 +266,11 @@ for(var i = 0 ; i < input.length; i++){
        output[match] = output[match] + ',' + input[i];
        output[match] = output[match].split(',').sort(); 
    }
-}; 
-for(var i = 0; i< Object.keys(output).length(); i++){
-  console.log(output[i]);  
 };
 
-
+for(var i = 0; i< Object.keys(output); i++){
+  console.log(output[i]);  
+};
 
 function findPolygonType(a,b,c,d){
   if(a == c && c == b && b == d){
@@ -300,8 +300,10 @@ for(var i=0; i<m.length; i++){
 }
 
 
+//[...a11].filter(x=> b11.has(x)).filter(y=> c11.has(y))
+
 var userA = [ 2, 3, 1 ];
-var userB = [ 2, 5, 3 ];
+var userB = [ 2, 3, 1 ];
 var userC = [ 7, 3, 1 ];
 var mp = {}, commonIds = [];
 for(var i =0; i< userA.length; i++){
@@ -316,7 +318,6 @@ for(var i =0; i< userB.length; i++){
     }
 }
 
-
 for(var i =0; i< userC.length; i++){
     if(mp[userC[i]]){
         mp[userC[i]] += 1;
@@ -326,7 +327,6 @@ for(var i =0; i< userC.length; i++){
     } 
 }
 
-
 var words = "breakfast beach citycenter location metro view staff price";
 var reviews = [
     {id:1, sentense: "This hotel has a nice view of the citycenter. The location is perfect."},
@@ -335,10 +335,6 @@ var reviews = [
 var m = 2;
 words = words.split(' ');
 var dict = {}, hotels = {};
-for(var i =0 ; i< words.length; i++){
-   dict[words[i]] = 1; 
-}
-
 for(var i =0 ; i< words.length; i++){
    dict[words[i]] = 1; 
 }
