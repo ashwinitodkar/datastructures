@@ -14,31 +14,6 @@ function stack(){
     }
 }
 
-function InfixToPostfix(infixStr){
-    var postFixStr = '';
-    var s = new stack();
-
-    for(var i = 0; i < infixStr.length; i++){
-        if(isOperand(infixStr[i])){
-            postFixStr += infixStr[i];
-        }
-        else{ 
-            //var c = getOperatorPrecedence(infixStr[i]);
-            while(!s.isEmpty() && getOperatorPrecedence(infixStr[i]) <= getOperatorPrecedence(s.top)){
-                postFixStr += s.pop();
-            }
-            s.push(infixStr[i]);
-        }
-    }
-
-    while(!s.isEmpty()){
-        postFixStr += infixStr.pop();
-    }
-}
-
-function isOperand(operand){
-    return !isNaN(parseInt(operand));
-}
 
 function getOperatorPrecedence(operator){
     switch(operator){
@@ -53,7 +28,40 @@ function getOperatorPrecedence(operator){
         case "-":
             return 1;
         default: return 0;
-         
     }
 }
 
+function InfixToPostfix(infixStr){
+    var postFixStr = '';
+    var s = new stack();
+
+    for(var i = 0; i < infixStr.length; i++){
+        if(isOperand(infixStr[i])){
+            postFixStr += infixStr[i];
+        }
+        else{ 
+            console.log('found operator', infixStr[i]);
+            console.log('getOperatorPrecedence(s.top)', getOperatorPrecedence(s.top()), s.top());
+            console.log('getOperatorPrecedence(infixStr[i])', getOperatorPrecedence(infixStr[i]), infixStr[i]);
+            console.log('s.isEmpty()', s.isEmpty());
+            while(s.isEmpty() && getOperatorPrecedence(infixStr[i]) <= getOperatorPrecedence(s.top())){
+                console.log('match');
+                postFixStr += s.pop();                  
+            }
+            s.push(infixStr[i]);
+        }
+    }
+
+    while(s.isEmpty()){
+        postFixStr += s.pop();
+    }
+    console.log('postFixStr', postFixStr);
+    console.log('stack', s.data);
+}
+
+function isOperand(operand){
+    return !isNaN(parseInt(operand));
+}
+
+var dd = InfixToPostfix("1+2*4-1");
+console.log(dd);

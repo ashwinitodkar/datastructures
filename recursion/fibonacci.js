@@ -19,6 +19,27 @@ function getNthFibNumber(n){
     return getNthFibNumber(n-1) + getNthFibNumber(n-2);
 }
 
+//DP
+var memoized = {}
+memoized["1"] = 1; 
+memoized["2"] = 1; 
+function getNthFibNumber(n){
+   var result = 0;
+    if(memoized[n]){
+        return memoized[n];     
+    }
+    //T0 = 0
+    //T1 = 1
+    //Tn = Tn-1 + Tn-2          if n > 1
+     if(n == 1 || n ==2 ){
+         result = 1;
+     }else{
+        result = getNthFibNumber(n-1) + getNthFibNumber(n-2);    
+        memoized[n] = result;       
+     }
+     return result;   
+ }
+ getNthFibNumber(6);
 /**
  * Method to return Fibonacci series with linear (without recursion)
  * @param {*} n 

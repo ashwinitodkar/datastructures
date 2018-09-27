@@ -213,7 +213,28 @@ function sherlockAndAnagrams(str) {
     return count;
  
  }
- 
+
+ function findNumberOfWordsInString(str, c) {
+     var resultMap = c.reduce((acc, val)=>{
+        acc[val] = 0    ;
+         return acc;
+       }, {});
+console.log('resultmap', resultMap);
+     for(var i=0; i < str.length ; i++){
+        for(var j = 0; j< str.length - i  ; j++){
+            var next = str.substr(j, i+1);
+            console.log('next:', next);
+            console.log('resultMap:', resultMap[next]);
+            if(resultMap[next] != null){
+              console.log('match found');  
+              resultMap[next]++;
+            }
+        }
+     }
+     return resultMap;
+ }
+ var c = ["aca","cat","hello", "world"];
+ console.log(findNumberOfWordsInString("acacabcatghhellomvnsdb", c))
 
  function sherlockAndAnagrams(str) {
     let count=0;
@@ -241,7 +262,7 @@ function sherlockAndAnagrams(str) {
         }
     }
     return count;
- 
+
  }
  
  class user{
